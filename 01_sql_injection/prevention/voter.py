@@ -20,7 +20,7 @@ def search_voter():
         # Layer 2: Input Normalization
         voter_id = normalize_input(voter_id)
 
-        # Layer 3: Parameterized Query Execution
+        # Layer 3, 4: Query Whitelisting & Parameterized Query Execution
         query = "SELECT * FROM voters WHERE voter_id = ?"
         print(f"[INFO] Executing search query: {query}")
         results = execute_query(query, (voter_id,))

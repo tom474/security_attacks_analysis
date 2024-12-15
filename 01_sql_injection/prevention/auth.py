@@ -21,7 +21,7 @@ def login():
         username = normalize_input(username)
         password = normalize_input(password)
 
-        # Layer 3: Parameterized Query Execution
+        # Layer 3, 4: Query Whitelisting & Parameterized Query Execution
         query = "SELECT * FROM admins WHERE username = ? AND password = ?"
         print(f"[INFO] Executing login query: {query}")
         results = execute_query(query, (username, password))

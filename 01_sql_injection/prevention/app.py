@@ -4,7 +4,7 @@ from voter import voter_bp
 from db import initialize_db
 
 app = Flask(__name__)
-app.secret_key = 'your_secret_key'  # Replace with a secure key
+app.secret_key = 'secret_key'
 
 # Register Blueprints
 app.register_blueprint(auth_bp)
