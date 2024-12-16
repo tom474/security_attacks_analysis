@@ -1,0 +1,6 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Report Successfully Generated</h1>
+<p>The report has been saved to: <strong>{{ filename }}</strong></p>
+<a href="/admin/generate_report" class="btn btn-secondary">Generate Another Report</a>
+{% endblock %}
