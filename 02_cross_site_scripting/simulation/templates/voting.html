@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block content %}
+<h1 class="mb-4">Voting Page</h1>
+<h2 class="mb-3 text-muted">Choose the right candidate for your future</h2>
+<div class="row">
+    {% for name, description in candidates %}
+    <div class="col-md-4">
+        <div class="card mb-4">
+            <div class="card-body">
+                <h5 class="card-title">{{ name }}</h5>
+                <p class="card-text">{{ description|safe }}</p>
+                <form method="POST" action="/voting/vote">
+                    <input type="hidden" name="candidate" value="{{ name }}">
+                    <button type="submit" class="btn btn-primary">Vote</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

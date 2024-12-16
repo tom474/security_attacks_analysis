@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block content %}
+<h1 class="mb-4">Add a New Candidate</h1>
+<h2 class="mb-3 text-muted">Fill in the details below</h2>
+<form method="POST">
+    <div class="mb-3">
+        <label for="name" class="form-label">Candidate Name</label>
+        <input type="text" class="form-control" id="name" name="name" placeholder="Enter candidate's name" required>
+    </div>
+    <div class="mb-3">
+        <label for="description" class="form-label">Candidate Description</label>
+        <textarea class="form-control" id="description" name="description" rows="4" placeholder="Enter candidate's description" required></textarea>
+    </div>
+    <button type="submit" class="btn btn-primary">Add Candidate</button>
+</form>
+{% endblock %}
