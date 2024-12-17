@@ -12,6 +12,6 @@ Description: A young visionary leader.<script>document.querySelectorAll('.card')
 
 Combination:
 A young visionary leader.
-<script>alert('Alice and Bob are bad. Vote for Cuong and you will get 10 dollars to your account.');</script>
-<script>document.querySelector('h2').innerText = 'Alice and Bob are bad. Vote for Cuong and you will get 10 dollars to your account';</script>
+<script>alert('Cuong is the best candidate!');</script>
+<script>document.querySelector('h2').innerText = 'Cuong is the best candidate!';</script>
 <script>document.querySelectorAll('.card').forEach(card => { if (!card.innerHTML.includes('Cuong')) { card.style.display = 'none'; } });</script>

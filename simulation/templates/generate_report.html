@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2 class="mb-4">Generate Report</h2>
+<form method="POST" action="{{ url_for('admin.generate_report') }}">
+    <div class="mb-3">
+        <label for="filename" class="form-label">Report Filename</label>
+        <input type="text" class="form-control" name="filename" placeholder="Enter filename (e.g., report.txt)" required>
+    </div>
+    <button type="submit" class="btn btn-primary">Generate Report</button>
+</form>
+{% endblock %}

