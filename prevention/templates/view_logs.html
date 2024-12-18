@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2 class="mb-4">View Logs</h2>
+<form method="POST" action="{{ url_for('admin.view_logs') }}">
+    {% if error %}
+    <div class="alert alert-danger">{{ error }}</div>
+    {% endif %}
+    <div class="mb-3">
+        <label for="log_file" class="form-label">Log File Name</label>
+        <input type="text" class="form-control" name="log_file" placeholder="Enter log file name" required>
+    </div>
+    <button type="submit" class="btn btn-primary">View Logs</button>
+</form>
+
+{% if log_content %}
+<h3 class="mt-4">Log Content</h3>
+<pre>{{ log_content }}</pre>
+{% endif %}
+{% endblock %}

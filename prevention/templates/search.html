@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2 class="mb-4">Search for Voter</h2>
+<form method="POST" action="{{ url_for('admin.search_voter') }}">
+    <div class="mb-3">
+        <label for="voter_id" class="form-label">Voter ID</label>
+        <input type="text" class="form-control" name="voter_id" placeholder="Enter Voter ID">
+    </div>
+    <button type="submit" class="btn btn-primary">Search</button>
+</form>
+{% endblock %}

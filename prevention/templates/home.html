@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1 class="mb-4">Welcome, {{ username }}!</h1>
+<p class="lead">
+    As an <strong>Admin</strong>, you can:
+</p>
+
+<div class="list-group">
+    <a href="{{ url_for('admin.search_voter') }}" class="list-group-item list-group-item-action">
+        Search for Voter Information
+    </a>
+    <a href="{{ url_for('admin.add_candidate') }}" class="list-group-item list-group-item-action">
+        Add a Candidate
+    </a>
+    <a href="{{ url_for('voting.voting_page') }}" class="list-group-item list-group-item-action">
+        Vote for a Candidate
+    </a>
+    <a href="{{ url_for('admin.generate_report') }}" class="list-group-item list-group-item-action">
+        Generate Report
+    </a>
+    <a href="{{ url_for('admin.view_logs') }}" class="list-group-item list-group-item-action">
+        View System Logs
+    </a>
+</div>
+
+{% endblock %}

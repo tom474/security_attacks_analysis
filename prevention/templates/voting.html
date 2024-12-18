@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1 class="mb-4">Voting Page</h1>
+<h2 class="mb-3 text-muted">Choose the right candidate for your future</h2>
+
+<!-- Flash Messages -->
+{% with messages = get_flashed_messages(with_categories=true) %}
+  {% if messages %}
+    {% for category, message in messages %}
+      <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+        {{ message }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      </div>
+    {% endfor %}
+  {% endif %}
+{% endwith %}
+
+<!-- Voting Form -->
+<form method="POST" action="{{ url_for('voting.vote_for_candidate') }}">
+    <!-- User Input for Name -->
+    <div class="mb-3">
+        <label for="name" class="form-label">Your Name</label>
+        <input type="text" class="form-control" id="name" name="name" placeholder="Enter your full name" required>
+    </div>
+
+    <!-- User Input for Voter ID -->
+    <div class="mb-3">
+        <label for="voter_id" class="form-label">Voter ID</label>
+        <input type="text" class="form-control" id="voter_id" name="voter_id" placeholder="Enter your Voter ID" required>
+    </div>
+
+    <!-- Candidate Cards -->
+    <h4>Select a Candidate:</h4>
+    <div class="row">
+        {% for name, description in candidates %}
+        <div class="col-md-4">
+            <div class="card mb-4">
+                <div class="card-body">
+                    <h5 class="card-title">{{ name }}</h5>
+                    <!-- <p class="card-text">{{ description|safe }}</p> -->
+                    <!-- Layer 5: Output Escaping -->
+                    <p class="card-text">{{ description }}</p>
+                    <button type="submit" name="candidate" value="{{ name }}" class="btn btn-primary">Vote for {{ name }}</button>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</form>
+{% endblock %}
