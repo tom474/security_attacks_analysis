@@ -16,7 +16,7 @@ app.register_blueprint(admin_bp)
 # Initialize the database
 initialize_db()
 
-# Layer 0: Block Malicious IPs
+# Block Malicious IPs
 BLOCKED_IPS = ["192.168.1.100", "203.0.113.15"]
 @app.before_request
 def block_malicious_ips():
@@ -25,7 +25,7 @@ def block_malicious_ips():
         return redirect(url_for('auth.login'))
     
     
-# Layer 1: Detect and block XSS payloads in requests
+# Detect and block XSS payloads in requests
 @app.before_request
 def detect_xss_payloads():
     for key, value in request.form.items():
@@ -40,7 +40,7 @@ def detect_xss_payloads():
             print(f"[BLOCKED] Query parameter '{key}' blocked at middleware layer.")
             return redirect(url_for('home'))
         
-# Layer 4: Content Security Policy (CSP)
+# Content Security Policy (CSP)
 @app.after_request
 def add_security_headers(response):
     response.headers['Content-Security-Policy'] = (
@@ -55,7 +55,7 @@ def add_security_headers(response):
 
 @app.route('/')
 def home():
-    # Layer 0: Authentication
+    # Authentication
     if 'logged_in' not in session or not session['logged_in']:
         return redirect(url_for('auth.login'))
     return render_template('home.html', username=session['username'])

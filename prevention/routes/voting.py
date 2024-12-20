@@ -23,11 +23,11 @@ def track_failed_request(client_ip):
 
 @voting_bp.route('/')
 def voting_page():
-    # Layer 0: Authentication
+    # Authentication
     if 'logged_in' not in session or not session['logged_in']:
         return redirect(url_for('auth.login'))
     
-    # Layer 5: Output Escaping
+    # Output Escaping
     query = "SELECT name, description FROM candidates"
     candidates = execute_query(query)
     print("[INFO] Fetched candidates for the voting page:")
@@ -39,12 +39,12 @@ def voting_page():
 def vote_for_candidate():
     client_ip = request.remote_addr
 
-    # Layer 1: IP Blocking
+    # IP Blocking
     if client_ip in BLOCKED_IPS:
         print(f"[BLOCKED] IP {client_ip} attempted to access '/vote'.")
         return "Your IP has been blocked due to suspicious activity.", 403
 
-    # Layer 2: Rate Limiting
+    # Rate Limiting
     if is_rate_limited("vote", client_ip):
         track_failed_request(client_ip)
         return "Too many requests. Please try again later.", 429
@@ -54,7 +54,7 @@ def vote_for_candidate():
     candidate = request.form['candidate']
 
     try:
-        # Layer 3: Input Validation
+        # Input Validation
         valid_voter_id, reason = validate_input(voter_id)
         valid_candidate, reason2 = validate_input(candidate)
 

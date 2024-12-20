@@ -8,7 +8,7 @@ admin_bp = Blueprint('admin', __name__, url_prefix='/admin')
 
 @admin_bp.route('/search', methods=['GET', 'POST'])
 def search_voter():
-    # Layer 0: Authentication
+    # Authentication
     if 'logged_in' not in session or not session['logged_in']:
         return redirect(url_for('auth.login'))
     
@@ -16,16 +16,16 @@ def search_voter():
         try:
             voter_id = request.form['voter_id']
 
-            # Layer 1: Input Validation
+            # Input Validation
             valid_voter_id, reason = validate_input(voter_id)
             if not valid_voter_id:
                 log_attack("Input Validation", "Input Validation", valid_voter_id, reason)
                 return render_template('results.html', results=None, error="Invalid input detected.")
             
-            # Layer 2: Input Normalization
+            # Input Normalization
             voter_id = normalize_input(voter_id)
 
-            # Layer 3, 4: Query Whitelisting & Parameterized Query Execution
+            # Query Whitelisting & Parameterized Query Execution
             query = f"SELECT * FROM voters WHERE voter_id = ?"
             print(f"[INFO] Executing search query: {query}")
             results = execute_query(query, (voter_id,))
@@ -37,7 +37,7 @@ def search_voter():
 
 @admin_bp.route('/add_candidate', methods=['GET', 'POST'])
 def add_candidate():
-    # Layer 0: Authentication
+    # Authentication
     if 'logged_in' not in session or not session['logged_in']:
         return redirect(url_for('auth.login'))
     
@@ -45,13 +45,13 @@ def add_candidate():
         name = request.form['name']
         description = request.form['description']
         try:
-            # Layer 2: XSS Detection - Input Validation
+            # XSS Detection - Input Validation
             if detect_xss(description):
                 print("[WARNING] Potential XSS attack detected in candidate description.")
                 print("[BLOCKED] Candidate addition blocked at input validation layer.")
                 return redirect(url_for('admin.add_candidate'))
             
-            # Layer 3: Input Sanitization
+            # Input Sanitization
             sanitized_name = sanitize_input(name)
             sanitized_description = sanitize_input(description)
 
@@ -66,11 +66,11 @@ def add_candidate():
 
 @admin_bp.route('/generate_report', methods=['GET', 'POST'])
 def generate_report():
-    # Layer 0: Authentication
+    # Authentication
     if 'logged_in' not in session or not session['logged_in']:
         return redirect(url_for('auth.login'))
     
-    # Layer 4: Rate Limiting
+    # Rate Limiting
     client_ip = request.remote_addr
     if is_rate_limited("generate_report", client_ip):
         return render_template('generate_report.html', error="Rate limit exceeded. Try again later.")
@@ -78,15 +78,15 @@ def generate_report():
     if request.method == 'POST':
         filename = request.form['filename']
         try:
-            # Layer 1: Validate filename
+            # Validate filename
             if not validate_filename(filename):
                 return render_template('generate_report.html', error="Invalid filename. Operation blocked.")
             
-            # Layer 2: Enforce allowed directory
+            # Enforce allowed directory
             if not is_allowed_report_path(filename):
                 return render_template('generate_report.html', error="Invalid report path. Operation blocked.")
             
-            # Layer 3: Secure command execution
+            # Secure command execution
             report_content = str(fetch_votes())
             report_path = os.path.join(ALLOWED_REPORT_DIR, filename)
             print(f"[INFO] Writing report to '{report_path}' securely...")
@@ -100,11 +100,11 @@ def generate_report():
 
 @admin_bp.route('/view_logs', methods=['GET', 'POST'])
 def view_logs():
-    # Layer 0: Authentication
+    # Authentication
     if 'logged_in' not in session or not session['logged_in']:
         return redirect(url_for('auth.login'))
     
-    # Layer 4: Rate Limiting
+    # Rate Limiting
     client_ip = request.remote_addr
     if is_rate_limited("view_logs", client_ip):
         return render_template('view_logs.html', error="Rate limit exceeded. Try again later.")
@@ -112,15 +112,15 @@ def view_logs():
     if request.method == 'POST':
         log_file = request.form['log_file']
         try:
-            # Layer 1: Validate filename
+            # Validate filename
             if not validate_filename(log_file):
                 return render_template('view_logs.html', error="Invalid log file name. Operation blocked.")
 
-            # Layer 2: Validate file path and whitelist
+            # Validate file path and whitelist
             if not is_allowed_log_path(log_file):
                 return render_template('view_logs.html', error="Access to the specified file is not allowed. Operation blocked.")
             
-            # Layer 3: Secure command execution
+            # Secure command execution
             log_path = os.path.join(ALLOWED_LOG_DIR, log_file)
             print(f"[INFO] Reading log file '{log_path}' securely...")
             log_content = execute_secure_command(['cat', log_path])

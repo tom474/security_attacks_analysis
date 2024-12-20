@@ -7,9 +7,6 @@ LOG_DIR = 'logs'
 LOG_FILE = os.path.join(LOG_DIR, 'system.log')
 
 
-# =========================
-# Database Initialization
-# =========================
 def initialize_db():
     conn = sqlite3.connect(DB_NAME)
     cursor = conn.cursor()
@@ -107,9 +104,6 @@ def initialize_db():
     initialize_logs()
 
 
-# =========================
-# Log Initialization
-# =========================
 def initialize_logs():
     os.makedirs(LOG_DIR, exist_ok=True)
     os.makedirs(REPORTS_DIR, exist_ok=True)
@@ -125,9 +119,6 @@ def initialize_logs():
         print("[INFO] system.log file already exists.")
 
 
-# =========================
-# Utility Functions
-# =========================
 def execute_query(query, params=None):
     conn = sqlite3.connect('voting_system.db')
     cursor = conn.cursor()

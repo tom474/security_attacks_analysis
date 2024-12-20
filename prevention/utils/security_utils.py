@@ -6,7 +6,6 @@ import time
 import psutil
 from collections import defaultdict
 
-# ---------- SQL Injection Mitigation ----------
 # SQL Injection Detection Patterns
 SQLI_PATTERNS = [
     r"(?i)union",           # UNION keyword
@@ -32,18 +31,18 @@ def log_attack(detection_layer, blocking_layer, query, reason):
     print(f"  - Query: {query}")
     print(f"  - Reason: {reason}\n")
 
-# Layer 1: Input Validation
+# Input Validation
 def validate_input(input_data):
     for pattern in SQLI_PATTERNS:
         if re.search(pattern, input_data):
             return False, f"Pattern matched: {pattern}"
     return True, None
 
-# Layer 2: Input Normalization
+# Input Normalization
 def normalize_input(input_data):
     return input_data.strip().replace("\t", "").replace("\n", "")
 
-# Layer 3, 4: Query Whitelisting & Parameterized Query Execution
+# Query Whitelisting & Parameterized Query Execution
 def execute_query(query, params=None):
     # Query Whitelisting
     if query not in ALLOWED_QUERIES:
@@ -76,8 +75,7 @@ def execute_query(query, params=None):
         conn.close()
 
 
-# ---------- Cross-Site Scripting (XSS) Mitigation ----------
-# Layer 2: XSS Detection - Input Validation
+# XSS Detection
 def detect_xss(input_string):
     patterns = [
         r"<script.*?>",  # Detect script tags
@@ -88,22 +86,21 @@ def detect_xss(input_string):
             return True
     return False
 
-# Layer 3: Input Sanitization
+# Input Sanitization
 def sanitize_input(input_string):
     sanitized = re.sub(r"[<>\"']", "", input_string)
     print(f"[INFO] Input sanitized: {sanitized}")
     return sanitized
 
 
-# ---------- Command Injection Mitigation ----------
-# Layer 1: Input Validation
+# Filename Validation
 def validate_filename(filename):
     if not re.match(r'^[a-zA-Z0-9_\-.]+$', filename):
         print("[WARNING] Invalid filename detected. Potential command injection attempt.")
         return False
     return True
 
-# Layer 2: File Path Whitelisting
+# File Path Whitelisting
 ALLOWED_REPORT_DIR = "reports"
 ALLOWED_LOG_DIR = "logs"
 ALLOWED_LOG_FILES = ["system.log"]
@@ -129,7 +126,7 @@ def is_allowed_log_path(filename):
         return False
     return True
 
-# Layer 3: Secure Execution with Environment Isolation
+# Secure Execution with Environment Isolation
 def execute_secure_command(command, stdout=None, capture_output=True, env=None):
     try:
         result = subprocess.run(command, stdout=stdout, check=True, text=True, capture_output=capture_output, env=env)
@@ -143,9 +140,9 @@ def execute_secure_command(command, stdout=None, capture_output=True, env=None):
         raise
     
 
-# Layer 4: Rate Limiting To Prevent Brute-force (in-memory for simplicity)
+# Rate Limiting To Prevent Brute-force (in-memory for simplicity)
 RATE_LIMIT = {"generate_report": {}, "view_logs": {}, "vote": {}}
-RATE_LIMIT_WINDOW = 60      # 60 seconds
+RATE_LIMIT_WINDOW = 60       # 60 seconds
 RATE_LIMIT_REQUESTS = 10     # Max 10 requests per window
 
 def is_rate_limited(endpoint, client_ip):

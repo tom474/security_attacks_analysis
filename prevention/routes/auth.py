@@ -11,7 +11,7 @@ def login():
         password = request.form['password']
         
         try:
-            # Layer 1: Input Validation
+            # Input Validation
             valid_username, reason = validate_input(username)
             valid_password, reason2 = validate_input(password)
 
@@ -19,11 +19,11 @@ def login():
                 log_attack("Input Validation", "Input Validation", f"Username: {username}, Password: {password}", reason or reason2)
                 return render_template('login.html', error="Invalid input detected.")
 
-            # Layer 2: Input Normalization
+            # Input Normalization
             username = normalize_input(username)
             password = normalize_input(password)
 
-            # Layer 3, 4: Query Whitelisting & Parameterized Query Execution
+            # Query Whitelisting & Parameterized Query Execution
             query = f"SELECT * FROM users WHERE username = ? AND password = ?"
             print(f"[INFO] Executing query: {query}")
             results = execute_query(query, (username, password))
