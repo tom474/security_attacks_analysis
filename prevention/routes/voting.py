@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template, request, redirect, url_for, session, flash
-# from db import execute_query
-from utils.security_utils import execute_query, validate_input, is_rate_limited
+from db import execute_query
+from utils.security_utils import validate_input, is_rate_limited
 
 voting_bp = Blueprint('voting', __name__, url_prefix='/voting')
 
